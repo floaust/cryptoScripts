@@ -1,16 +1,42 @@
 package main
 
-import "github.com/pterm/pterm"
+import (
+	"github.com/pterm/pterm"
+	"io/ioutil"
+	"strings"
+)
 
-const text = "VJGTWF SMX VWE SHXWDTSMEW"
+const text = `VJGTWF SMX VWE SHXWDTSMEW,
+VWJ KWZJ KMWKKW TAJFWF LJMY,
+ZAFY VWK XJMWZDAFYK DWLRLW HXDSMEW
+MFV SF FMWKKWF FGUZ YWFMY.`
+
+const validate = true
 
 func main() {
-	for i := 0; i < 26; i++ {
-		pterm.Println(cipher(text, -1, i))
+	germanBytes, err := ioutil.ReadFile("language-german.lst.txt")
+	englishBytes, err := ioutil.ReadFile("language-english.lst.txt")
+	if err != nil {
+		panic(err)
 	}
 
+	words := string(germanBytes) + "\n" + string(englishBytes)
+
 	for i := 0; i < 26; i++ {
-		pterm.Println(cipher(text, 1, i))
+		t := cipher(text, 1, i) + "\n"
+		t2 := cipher(text, -1, i)
+		if validate {
+			if strings.Contains(strings.ToLower(words), strings.ToLower(strings.Split(t, " ")[0])) {
+				pterm.Printf("Offset: %d | Text: %s\n", i, t)
+			}
+			if strings.Contains(strings.ToLower(words), strings.ToLower(strings.Split(t2, " ")[0])) {
+				pterm.Printf("Offset: %d | Text: %s\n", i, t2)
+			}
+		} else {
+			pterm.Printf("Offset: %d | Text: %s\n", i, t)
+			pterm.Printf("Offset: %d | Text: %s\n", i, t2)
+		}
+
 	}
 }
 
