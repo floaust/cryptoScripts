@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	"github.com/pterm/pterm"
 	"strconv"
 	"strings"
 )
@@ -11,19 +11,29 @@ func main() {
 }
 
 func sam(x int, n int, d int64) {
-	fmt.Println(strconv.FormatInt(d, 2))
+	pterm.Println(strconv.FormatInt(d, 2))
 	binSplit := strings.Split(strconv.FormatInt(d, 2), "")
+	var sOrm string
+	var output string
 
 	xMod := x
 
 	for i, s := range binSplit {
 		if i >= 1 {
 			xMod = (xMod * xMod) % n
-			fmt.Println(i, ": sq ", xMod, " mod ", n)
+			sOrm += pterm.Sprintln(i, ": sq ")
+			output += pterm.Sprintln(xMod, " mod ", n)
 			if s == "1" {
 				xMod = (xMod * x) % n
-				fmt.Println(i, ": mul", xMod, " mod ", n)
+				sOrm += pterm.Sprintln(i, ": mul ")
+				output += pterm.Sprintln(xMod, " mod ", n)
 			}
 		}
 	}
+
+	panels := pterm.Panels{
+		{{Data: sOrm}, {Data: output}},
+	}
+
+	_ = pterm.DefaultPanel.WithPanels(panels).WithPadding(2).Render()
 }

@@ -1,6 +1,8 @@
 package main
 
-import "fmt"
+import (
+	"github.com/pterm/pterm"
+)
 
 func main() {
 	ggt(9600, 1003)
@@ -8,6 +10,7 @@ func main() {
 
 func ggt(n int, a int) {
 	var s1, s2, s3, t1, t2, t3 int
+	var output1, output2 string
 	for i := 0; i < n; i++ {
 		if n%a == 0 {
 			break
@@ -20,7 +23,8 @@ func ggt(n int, a int) {
 			n = a
 			a = nTmp % aTmp
 
-			fmt.Println(nTmp, "=", t2, "*", aTmp, "+", a, "                   ", a, "=", s2, "* n -", t2, "* a;")
+			output1 += pterm.Sprintln(nTmp, "=", t2, "*", aTmp, "+", a)
+			output2 += pterm.Sprintln(a, "=", s2, "* n -", t2, "* a;")
 		} else if i == 1 {
 			t1 = t2
 			s1 = s2
@@ -32,7 +36,8 @@ func ggt(n int, a int) {
 			n = a
 			a = nTmp % aTmp
 
-			fmt.Println(nTmp, "=", multiplicand, "*", aTmp, "+", a, "                   ", a, "= -", s2, "* n +", t2, "* a;")
+			output1 += pterm.Sprintln(nTmp, "=", multiplicand, "*", aTmp, "+", a)
+			output2 += pterm.Sprintln(a, "= -", s2, "* n +", t2, "* a;")
 		} else {
 			multiplicand := n / a
 			s3 = multiplicand*s2 + s1
@@ -43,9 +48,11 @@ func ggt(n int, a int) {
 			a = nTmp % aTmp
 
 			if i%2 == 1 {
-				fmt.Println(nTmp, "=", multiplicand, "*", aTmp, "+", a, "                   ", a, "= -", s3, "* n +", t3, "* a;")
+				output1 += pterm.Sprintln(nTmp, "=", multiplicand, "*", aTmp, "+", a)
+				output2 += pterm.Sprintln(a, "= -", s3, "* n +", t3, "* a;")
 			} else {
-				fmt.Println(nTmp, "=", multiplicand, "*", aTmp, "+", a, "                   ", a, "=", s3, "* n -", t3, "* a;")
+				output1 += pterm.Sprintln(nTmp, "=", multiplicand, "*", aTmp, "+", a)
+				output2 += pterm.Sprintln(a, "=", s3, "* n -", t3, "* a;")
 			}
 
 			t1 = t2
@@ -54,4 +61,10 @@ func ggt(n int, a int) {
 			s2 = s3
 		}
 	}
+
+	panels := pterm.Panels{
+		{{Data: output1}, {Data: output2}},
+	}
+
+	_ = pterm.DefaultPanel.WithPanels(panels).WithPadding(5).Render()
 }
