@@ -5,7 +5,7 @@ import (
 )
 
 func main() {
-	ggt(1012, 137)
+	ggt(26, 9)
 }
 
 func ggt(n int, a int) {
@@ -63,8 +63,7 @@ func ggt(n int, a int) {
 	}
 
 	panels := pterm.Panels{
-		{{Data: output1}, {Data: output2}},
+		{{output1}, {output2}},
 	}
-
 	_ = pterm.DefaultPanel.WithPanels(panels).WithPadding(5).Render()
 }

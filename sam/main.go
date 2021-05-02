@@ -32,7 +32,7 @@ func sam(x int, n int, d int64) {
 	}
 
 	panels := pterm.Panels{
-		{{Data: sOrm}, {Data: output}},
+		{{sOrm}, {output}},
 	}
 
 	_ = pterm.DefaultPanel.WithPanels(panels).WithPadding(2).Render()
