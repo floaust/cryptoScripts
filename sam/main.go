@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	sam(31, 33, 7)
+	sam(45, 257, 133)
 }
 
 func sam(x int, n int, d int64) {

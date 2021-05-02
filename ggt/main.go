@@ -5,7 +5,7 @@ import (
 )
 
 func main() {
-	ggt(9600, 1003)
+	ggt(1012, 137)
 }
 
 func ggt(n int, a int) {
