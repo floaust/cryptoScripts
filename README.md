@@ -1,1 +1,1 @@
-"# cryptoScripts" 
+# cryptoScripts
