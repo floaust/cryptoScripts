@@ -7,3 +7,5 @@ A small tool to output
 - ss (shift cipher)
 
 in a nice way with the comuting path.
+
+Nice output designed with [PTerm](https://github.com/pterm/pterm).
